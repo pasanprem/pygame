@@ -15,7 +15,6 @@ img = pygame.image.load('Helicopter.png')
 x = 150
 y = 200
 
-
 game_over = False
 
 while not game_over:

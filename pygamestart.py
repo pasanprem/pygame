@@ -1,4 +1,5 @@
 import pygame
+import time
 
 black = (0,0,0)
 white = (255,255,255)
@@ -15,18 +16,25 @@ clock = pygame.time.Clock()
 img = pygame.image.load('Helicopter.png')
 
 def replay_or_quit():
-    for event in pygame.event.get([pygame.KEYDOWN, pygame.QUIT]):
+    for event in pygame.event.get([pygame.KEYDOWN, pygame.KEYUP, pygame.QUIT]):
         if event.type == pygame.QUIT:
             pygame.quit()
             quit()
+
+        elif event.type == pygame.KEYDOWN:
+            continue
+
+        return event.key
+
+    return None
 
 def makeTextObjs(text, font):
     textSurface = font.render(text, True, white)
     return textSurface, textSurface.get_rect()
 
 def msgSurface(text):
-    smallText = pygame.font.Font('freesansbold.ttf', 20)
-    largeText = pygame.font.Font('freesansbold.ttf, 150')
+    smallText = pygame.font.Font('arial.ttf', 20)
+    largeText = pygame.font.Font('arial.ttf, 150')
 
     titleTextSurf, titleTextRect = makeTextObjs(text, largeText)
     titleTextRect.center = surfaceWidth/2, surfaceHeight/2
@@ -42,7 +50,7 @@ def msgSurface(text):
     while replay_or_quit() == None:
         clock.tick()
 
-
+    main()
 
 def gameOver():
     msgSurface('Kaboom!')

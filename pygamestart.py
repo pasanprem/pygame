@@ -33,8 +33,8 @@ def makeTextObjs(text, font):
     return textSurface, textSurface.get_rect()
 
 def msgSurface(text):
-    smallText = pygame.font.Font('arial.ttf', 20)
-    largeText = pygame.font.Font('arial.ttf, 150')
+    smallText = pygame.font.Font('freesansbold.ttf', 20)
+    largeText = pygame.font.Font('freesansbold.ttf', 150)
 
     titleTextSurf, titleTextRect = makeTextObjs(text, largeText)
     titleTextRect.center = surfaceWidth/2, surfaceHeight/2
@@ -42,7 +42,7 @@ def msgSurface(text):
 
     typTextSurf, typTextRect = makeTextObjs('Press any key to continue', smallText)
     typTextRect.center = surfaceWidth/2, ((surfaceHeight/2) + 100)
-    surface.blit(titleTextSurf, typTextRect)
+    surface.blit(typTextSurf, typTextRect)
 
     pygame.display.update()
     time.sleep(1)

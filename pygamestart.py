@@ -9,11 +9,18 @@ pygame.init()
 surfaceWidth = 800
 surfaceHeight = 500
 
+imageHeight = 43
+imageWidth = 100
+
 surface = pygame.display.set_mode((surfaceWidth,surfaceHeight))
 pygame.display.set_caption('Helicopter')
 clock = pygame.time.Clock()
 
 img = pygame.image.load('Helicopter.png')
+
+def blocks(x_block, y_block, block_width, block_height, gap):
+    pygame.draw.rect(surface, white, [x_block,y_block,block_width,block_height])
+    pygame.draw.rect(surface, white, [x_block,y_block+block_height+gap,block_width,block_height])
 
 def replay_or_quit():
     for event in pygame.event.get([pygame.KEYDOWN, pygame.KEYUP, pygame.QUIT]):
@@ -64,6 +71,14 @@ def main():
     x = 150
     y = 200
     y_move = 0
+
+    x_block = surfaceWidth
+    y_block = 0
+
+    block_width = 75
+    block_height = randint(0,surfaceHeight)
+    gap = imageHeight * 3
+    block_move = 3
 
     game_over = False
 

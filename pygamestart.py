@@ -19,6 +19,11 @@ clock = pygame.time.Clock()
 
 img = pygame.image.load('Helicopter.png')
 
+def score(count):
+    font = pygame.font.Font('freesansbold.ttf', 20)
+    text = font.render("Score: " + str(count), True, white)
+    surface.blit(text, [0,0])
+
 def blocks(x_block, y_block, block_width, block_height, gap):
     pygame.draw.rect(surface, white, [x_block,y_block,block_width,block_height])
     pygame.draw.rect(surface, white, [x_block,y_block+block_height+gap,block_width,surfaceHeight])
@@ -79,7 +84,9 @@ def main():
     block_width = 75
     block_height = randint(0, (surfaceHeight / 2))
     gap = imageHeight * 3
-    block_move = 6
+    block_move = 4
+
+    current_score = 0
 
     game_over = False
 
@@ -101,6 +108,7 @@ def main():
 
         surface.fill(black)
         helicopter(x, y, img)
+        score(current_score)
 
 
         blocks(x_block, y_block, block_width, block_height, gap)
@@ -133,7 +141,8 @@ def main():
                     print('Game over LOWER')
                     gameOver()
 
-
+        if x < x_block and x > x_block - block_move:
+            current_score += 1               
 
 
         pygame.display.update()

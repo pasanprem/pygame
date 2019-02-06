@@ -133,6 +133,7 @@ def main():
             x_block = surfaceWidth
             block_height = randint (0, (surfaceHeight / 2))
             blockColor = colorChoices[randrange(0,len(colorChoices))]
+            current_score += 1
 
         if x  + imageWidth > x_block:
             if x < x_block + block_width:
@@ -153,16 +154,20 @@ def main():
                     print('Game over LOWER')
                     gameOver()
 
-        if x_block < (x - block_width) < x_block + block_move:
-            current_score += 1   
+        #if x_block < (x - block_width) < x_block + block_move:
+        #    current_score += 1
 
         if 3 <= current_score < 5:
-            block_move = 6        
-            gap = imageHeight * 2.6
+            block_move = 5        
+            gap = imageHeight * 2.9
 
         if 5 <= current_score < 8:
-            block_move = 8        
-            gap = imageHeight * 2.3
+            block_move = 6        
+            gap = imageHeight * 2.8
+
+        if 8 <= current_score < 14:
+            block_move = 7        
+            gap = imageHeight * 2.7    
 
         pygame.display.update()
         clock.tick(30)

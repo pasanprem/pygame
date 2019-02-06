@@ -1,9 +1,19 @@
 import pygame
 import time
-from random import randint
+from random import randint,randrange
 
 black = (0,0,0)
 white = (255,255,255)
+
+sunset = (253,72,47)
+
+greenyellow = (184,255,0)
+brightblue = (47,228,253)
+orange = (255,113,0)
+yellow = (255,236,0)
+purple = (252,67,255)
+
+colorChoices = [greenyellow,brightblue,orange,yellow,purple]
 
 pygame.init()
 
@@ -24,9 +34,10 @@ def score(count):
     text = font.render("Score: " + str(count), True, white)
     surface.blit(text, [0,0])
 
-def blocks(x_block, y_block, block_width, block_height, gap):
-    pygame.draw.rect(surface, white, [x_block,y_block,block_width,block_height])
-    pygame.draw.rect(surface, white, [x_block,y_block+block_height+gap,block_width,surfaceHeight])
+def blocks(x_block, y_block, block_width, block_height, gap, colorChoice):
+    
+    pygame.draw.rect(surface, colorChoice, [x_block,y_block,block_width,block_height])
+    pygame.draw.rect(surface, colorChoice, [x_block,y_block+block_height+gap,block_width,surfaceHeight])
 
 def replay_or_quit():
     for event in pygame.event.get([pygame.KEYDOWN, pygame.KEYUP, pygame.QUIT]):
@@ -42,7 +53,7 @@ def replay_or_quit():
     return None
 
 def makeTextObjs(text, font):
-    textSurface = font.render(text, True, white)
+    textSurface = font.render(text, True, sunset)
     return textSurface, textSurface.get_rect()
 
 def msgSurface(text):
@@ -88,6 +99,8 @@ def main():
 
     current_score = 0
 
+    blockColor = colorChoices[randrange(0,len(colorChoices))]
+
     game_over = False
 
     while not game_over:
@@ -108,12 +121,10 @@ def main():
 
         surface.fill(black)
         helicopter(x, y, img)
-        score(current_score)
-
-
-        blocks(x_block, y_block, block_width, block_height, gap)
+        
+        blocks(x_block, y_block, block_width, block_height, gap, blockColor)
+        score(current_score)                                                         #Display score after drawing the block
         x_block -= block_move
-
 
         if y > surfaceHeight-40 or y < 0:
             gameOver()
@@ -121,6 +132,7 @@ def main():
         if x_block < (-1*block_width):
             x_block = surfaceWidth
             block_height = randint (0, (surfaceHeight / 2))
+            blockColor = colorChoices[randrange(0,len(colorChoices))]
 
         if x  + imageWidth > x_block:
             if x < x_block + block_width:
@@ -141,9 +153,16 @@ def main():
                     print('Game over LOWER')
                     gameOver()
 
-        if x < x_block and x > x_block - block_move:
-            current_score += 1               
+        if x_block < (x - block_width) < x_block + block_move:
+            current_score += 1   
 
+        if 3 <= current_score < 5:
+            block_move = 6        
+            gap = imageHeight * 2.6
+
+        if 5 <= current_score < 8:
+            block_move = 8        
+            gap = imageHeight * 2.3
 
         pygame.display.update()
         clock.tick(30)
